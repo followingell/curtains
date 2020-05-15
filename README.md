@@ -1,2 +1,2 @@
 # curtains
-🌅 Receive a daily, customised SMS using Twilio &amp; AWS Lambda.
+🌅 Receive a customised SMS every morning using Twilio &amp; AWS Lambda.
