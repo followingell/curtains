@@ -1,29 +1,53 @@
 package curtains;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DailyMessage {
 
-    public String getTodaysMessage() throws IOException {
+    public String getTodaysMessage() throws IOException, ParseException {
         LocalDate today = LocalDate.now(Config.MY_TIMEZONE);
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd");
+
+        // see: https://stackoverflow.com/a/50369812/2667225
+        Map<Long, String> ordinalNumbers = new HashMap<>(31);
+        ordinalNumbers.put(1L, "1st");
+        ordinalNumbers.put(2L, "2nd");
+        ordinalNumbers.put(3L, "3rd");
+        ordinalNumbers.put(21L, "21st");
+        ordinalNumbers.put(22L, "22nd");
+        ordinalNumbers.put(23L, "23rd");
+        ordinalNumbers.put(31L, "31st");
+        for (long d = 1; d <= 31; d++) {
+            ordinalNumbers.putIfAbsent(d, "" + d + "th");
+        }
+
+        DateTimeFormatter dateFormatter = new DateTimeFormatterBuilder()
+            .appendPattern("EEEE, ")
+            .appendText(ChronoField.DAY_OF_MONTH, ordinalNumbers)
+            .appendPattern(" MMMM")
+            .toFormatter();
+
         String todaysDate = today.format(dateFormatter);
 
         Wttr.WttrResult wttr = new Wttr().getTodaysWeather();
 
         return String.format(
-            "Good Morning, it's %s!\n"
-                + "The 🌡 is %s and we'll be having %s %s\n"
-                + "Humidity is at %s & there will be %s of ☔\n"
+            "Good Morning 👋, it's %s!\n"
+                + "The 🌡 is %s, and for the weather, currently, we have %s %s\n"
+                + "The humidity is %s with %s of ☔ and %s 🌬\n"
                 + "The sun sets at %s & the moon's phase is %s",
-            todaysDate, wttr.temperature, wttr.weather, wttr.weatherEmoji, wttr.humidity,
-            wttr.precipitationMM, wttr.sunset, wttr.moonphaseEmoji
+            todaysDate, wttr.temperature, wttr.weather, wttr.weatherEmoji,
+            wttr.humidity, wttr.precipitationMM, wttr.wind, wttr.sunset, wttr.moonPhaseEmoji
         );
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         System.out.println(new DailyMessage().getTodaysMessage());
     }
 
