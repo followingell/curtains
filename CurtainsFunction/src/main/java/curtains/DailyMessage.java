@@ -34,21 +34,25 @@ public class DailyMessage {
             .toFormatter();
 
         String todaysDate = today.format(dateFormatter);
-
         Wttr.WttrResult wttr = new Wttr().getTodaysWeather();
+        String affirmation = new Affirmation().getAffirmation();
+        String news = new News().getNews();
 
         return String.format(
             "Good Morning 👋, it's %s!\n"
                 + "The 🌡 is %s, and for the weather, currently, we have %s %s\n"
                 + "The humidity is %s with %s of ☔ and %s 🌬\n"
-                + "The sun sets at %s & the moon's phase is %s",
+                + "The sun sets at %s & the moon's phase is %s\n"
+                + "Remember: %s 💆‍‍\n",
             todaysDate, wttr.temperature, wttr.weather, wttr.weatherEmoji,
-            wttr.humidity, wttr.precipitationMM, wttr.wind, wttr.sunset, wttr.moonPhaseEmoji
+            wttr.humidity, wttr.precipitationMM, wttr.wind, wttr.sunset, wttr.moonPhaseEmoji, affirmation
         );
     }
 
     public static void main(String[] args) throws IOException, ParseException {
-        System.out.println(new DailyMessage().getTodaysMessage());
+        String todaysMessage = new DailyMessage().getTodaysMessage();
+        System.out.println(todaysMessage);
+        // new TwilioSMSSender().sendMessage(todaysMessage);
     }
 
 }
