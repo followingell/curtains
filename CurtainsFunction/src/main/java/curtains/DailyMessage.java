@@ -43,9 +43,11 @@ public class DailyMessage {
                 + "The 🌡 is %s, and for the weather, currently, we have %s %s\n"
                 + "The humidity is %s with %s of ☔ and %s 🌬\n"
                 + "The sun sets at %s & the moon's phase is %s\n"
+                + "Today's News 🗞: %s\n"
                 + "Remember: %s 💆‍‍\n",
             todaysDate, wttr.temperature, wttr.weather, wttr.weatherEmoji,
-            wttr.humidity, wttr.precipitationMM, wttr.wind, wttr.sunset, wttr.moonPhaseEmoji, affirmation
+            wttr.humidity, wttr.precipitationMM, wttr.wind, wttr.sunset, wttr.moonPhaseEmoji,
+            news, affirmation
         );
     }
 

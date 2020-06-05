@@ -42,7 +42,7 @@ public class Wttr {
             .execute()
             .returnContent()
             .asString()
-            .split(",");
+            .split(",(?! )");
 
         response[1] = response[1].toLowerCase();
 

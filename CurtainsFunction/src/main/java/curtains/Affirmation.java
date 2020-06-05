@@ -13,12 +13,10 @@ public class Affirmation {
             .execute()
             .returnContent().asString();
 
-        String affirmationText = Config.MAPPER
+        return Config.MAPPER
             .readTree(affirmationJson)
             .get("affirmation")
             .asText();
-
-        return affirmationText;
     }
 
 }
