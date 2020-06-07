@@ -6,7 +6,7 @@ import java.time.ZoneId;
 public class Config {
 
     public static final ZoneId MY_TIMEZONE = ZoneId.of("Europe/London");
-    public static final String WTTR_LOCATION = "<LOCATION>";
+    public static final String WTTR_LOCATION = "<WTTR_LOCATION>";
     public static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static final String NEWSAPI_KEY = "<NEWSAPI_KEY>";

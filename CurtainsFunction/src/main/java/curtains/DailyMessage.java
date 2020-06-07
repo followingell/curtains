@@ -36,25 +36,27 @@ public class DailyMessage {
         String todaysDate = today.format(dateFormatter);
         Wttr.WttrResult wttr = new Wttr().getTodaysWeather();
         String affirmation = new Affirmation().getAffirmation();
-        String news = new News().getNews();
+        String todaysNews = new News().getTodaysNews();
+        String historicNews = new News().getHistoricNews();
 
         return String.format(
-            "Good Morning 👋, it's %s!\n"
+            "Good Morning 👋, it's %s!\n\n"
                 + "The 🌡 is %s, and for the weather, currently, we have %s %s\n"
                 + "The humidity is %s with %s of ☔ and %s 🌬\n"
-                + "The sun sets at %s & the moon's phase is %s\n"
-                + "Today's News 🗞: %s\n"
+                + "The sun sets at %s & the moon's phase is %s\n\n"
+                + "In the news today 🗞: %s\n"
+                + "In the news 10 years ago 👴: %s\n\n"
                 + "Remember: %s 💆‍‍\n",
             todaysDate, wttr.temperature, wttr.weather, wttr.weatherEmoji,
             wttr.humidity, wttr.precipitationMM, wttr.wind, wttr.sunset, wttr.moonPhaseEmoji,
-            news, affirmation
+            todaysNews, historicNews, affirmation
         );
     }
 
     public static void main(String[] args) throws IOException, ParseException {
         String todaysMessage = new DailyMessage().getTodaysMessage();
         System.out.println(todaysMessage);
-        // new TwilioSMSSender().sendMessage(todaysMessage);
+        new TwilioSMSSender().sendMessage(todaysMessage);
     }
 
 }

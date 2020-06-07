@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import org.apache.http.client.fluent.Request;
 
 public class Wttr {
@@ -46,8 +46,8 @@ public class Wttr {
 
         response[1] = response[1].toLowerCase();
 
-        Date unformattedTime = new SimpleDateFormat("HH:mm:ss").parse(response[6]);
-        response[6] = new SimpleDateFormat("h:mm a").format(unformattedTime);
+        LocalTime unformattedTime = LocalTime.parse(response[6], DateTimeFormatter.ofPattern("HH:mm:ss"));
+        response[6] = unformattedTime.format(DateTimeFormatter.ofPattern("h:mm a"));
 
         return new WttrResult(response[0], response[1], response[2], response[3], response[4], response[5], response[6], response[7].trim());
     }
