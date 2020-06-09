@@ -9,13 +9,28 @@ import org.apache.http.client.fluent.Request;
 
 public class News {
 
-    private static final String TODAYS_DATE_MINUS_TEN_YEARS = LocalDate.now()
-        .minus(10, ChronoUnit.YEARS).toString();
+    private String lookbackDate;
 
-    public String getTodaysNews() throws IOException {
+    public void setLookbackDate(long lookbackAmount, ChronoUnit lookbackUnit) {
+        if (lookbackAmount > 0) {
+            this.lookbackDate = LocalDate.now().minus(lookbackAmount, lookbackUnit).toString();
+        } else {
+            System.err.println("lookbackAmount must be <= 0.");
+        }
+    }
+
+    public String getLookbackDate() {
+        return lookbackDate;
+    }
+
+    public static boolean jsonNodeStatusOk(JsonNode node) {
+        return node.findValue("status").asText().equals("ok");
+    }
+
+    public String getTodaysNews(String source) throws IOException {
 
         String todaysNewsPage = "https://newsapi.org/v2/top-headlines?" + "pageSize=1"
-            + "&sources=bbc-news" + "&apiKey=" + Config.NEWSAPI_KEY;
+            + "&sources=" + source + "&apiKey=" + Config.NEWSAPI_API_KEY;
 
         String todaysNewsJson = Request
             .Get(URI.create(todaysNewsPage))
@@ -24,10 +39,10 @@ public class News {
 
         JsonNode todaysNewsObj = Config.MAPPER.readTree(todaysNewsJson);
 
-        if (todaysNewsObj.findValue("status").asText().equals("ok")) {
+        if (jsonNodeStatusOk(todaysNewsObj)) {
             JsonNode todaysTopArticle = todaysNewsObj.findValues("articles").get(0);
-            return todaysTopArticle.findValue("title").asText() + ": " + todaysTopArticle
-                .findValue("url").asText();
+
+            return todaysTopArticle.findValue("title").asText() + ": " + todaysTopArticle.findValue("url").asText();
         } else {
             return "Error retrieving today's news";
         }
@@ -35,10 +50,12 @@ public class News {
 
     public String getHistoricNews() throws IOException {
 
+        setLookbackDate(10, ChronoUnit.YEARS);
+
         String historicNewsPage = "https://content.guardianapis.com/search?" + "section=world"
-            + "&from-date=" + TODAYS_DATE_MINUS_TEN_YEARS + "&to-date="
-            + TODAYS_DATE_MINUS_TEN_YEARS + "&use-date=published" + "&show-editors-picks=true"
-            + "&page-size=1" + "&page=1" + "&api-key=" + Config.GUARDIAN_OPEN_PLATFORM_API_KEY;
+            + "&from-date=" + getLookbackDate() + "&to-date=" + getLookbackDate()
+            + "&use-date=published" + "&show-editors-picks=true" + "&page-size=1" + "&page=1"
+            + "&api-key=" + Config.GUARDIAN_OPEN_PLATFORM_API_KEY;
 
         String historicNewsJson = Request
             .Get(URI.create(historicNewsPage))
@@ -47,10 +64,10 @@ public class News {
 
         JsonNode historicNewsObj = Config.MAPPER.readTree(historicNewsJson);
 
-        if (historicNewsObj.findValue("status").asText().equals("ok")) {
+        if (jsonNodeStatusOk(historicNewsObj)) {
             JsonNode historicTopArticle = historicNewsObj.findValues("results").get(0);
-            return historicTopArticle.findValue("webTitle").asText() + ": " + historicTopArticle
-                .findValue("webUrl").asText();
+
+            return historicTopArticle.findValue("webTitle").asText() + ": " + historicTopArticle.findValue("webUrl").asText();
         } else {
             return "Error retrieving historic news";
         }

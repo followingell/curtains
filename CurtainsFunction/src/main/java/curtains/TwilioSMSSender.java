@@ -11,10 +11,7 @@ public class TwilioSMSSender {
     }
 
     public void sendMessage(String message) {
-        Message.creator(
-            new PhoneNumber(Config.MY_PHONE_NUMBER),
-            new PhoneNumber(Config.TWILIO_PHONE_NUMBER),
-            message)
-            .create();
+        Message.creator(new PhoneNumber(Config.RECEIVER_PHONE_NUMBER),
+            new PhoneNumber(Config.TWILIO_PHONE_NUMBER), message).create();
     }
 }

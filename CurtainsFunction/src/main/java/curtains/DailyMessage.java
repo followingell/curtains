@@ -1,7 +1,6 @@
 package curtains;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -11,7 +10,8 @@ import java.util.Map;
 
 public class DailyMessage {
 
-    public String getTodaysMessage() throws IOException, ParseException {
+    public String fetchAndFormatTodaysDate() {
+
         LocalDate today = LocalDate.now(Config.MY_TIMEZONE);
 
         // see: https://stackoverflow.com/a/50369812/2667225
@@ -33,10 +33,15 @@ public class DailyMessage {
             .appendPattern(" MMMM")
             .toFormatter();
 
-        String todaysDate = today.format(dateFormatter);
+        return today.format(dateFormatter);
+    }
+
+    public String getTodaysMessage() throws IOException {
+
+        String todaysDate = fetchAndFormatTodaysDate();
         Wttr.WttrResult wttr = new Wttr().getTodaysWeather();
         String affirmation = new Affirmation().getAffirmation();
-        String todaysNews = new News().getTodaysNews();
+        String todaysNews = new News().getTodaysNews("bbc-news");
         String historicNews = new News().getHistoricNews();
 
         return String.format(
@@ -47,16 +52,9 @@ public class DailyMessage {
                 + "In the news today 🗞: %s\n"
                 + "In the news 10 years ago 👴: %s\n\n"
                 + "Remember: %s 💆‍‍\n",
-            todaysDate, wttr.temperature, wttr.weather, wttr.weatherEmoji,
-            wttr.humidity, wttr.precipitationMM, wttr.wind, wttr.sunset, wttr.moonPhaseEmoji,
-            todaysNews, historicNews, affirmation
+            todaysDate, wttr.getTemperature(), wttr.getWeather(), wttr.getWeatherEmoji(),
+            wttr.getHumidity(), wttr.getPrecipitationMM(), wttr.getWind(), wttr.getSunset(),
+            wttr.getMoonPhaseEmoji(), todaysNews, historicNews, affirmation
         );
     }
-
-    public static void main(String[] args) throws IOException, ParseException {
-        String todaysMessage = new DailyMessage().getTodaysMessage();
-        System.out.println(todaysMessage);
-        new TwilioSMSSender().sendMessage(todaysMessage);
-    }
-
 }

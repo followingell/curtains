@@ -18,5 +18,4 @@ public class Affirmation {
             .get("affirmation")
             .asText();
     }
-
 }
