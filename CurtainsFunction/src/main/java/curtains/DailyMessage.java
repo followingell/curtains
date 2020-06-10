@@ -8,8 +8,17 @@ import java.time.temporal.ChronoField;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * DailyMessage utilises other classes to build and format the message to be sent to the
+ * RECEIVER_PHONE_NUMBER.
+ */
 public class DailyMessage {
 
+    /**
+     * fetchAndFormatTodaysDate takes today's date and returns it as
+     * dayOfWeek-ordinalDayNumber-month formatted String e.g. Wednesday, 10th June.
+     * @return String. Today's date in dayOfWeek-ordinalDayNumber-month format.
+     */
     public String fetchAndFormatTodaysDate() {
 
         LocalDate today = LocalDate.now(Config.MY_TIMEZONE);
@@ -36,6 +45,11 @@ public class DailyMessage {
         return today.format(dateFormatter);
     }
 
+    /**
+     * getTodaysMessage builds the message to be sent to the RECEIVER_PHONE_NUMBER.
+     * @return String. The message to be sent to the RECEIVER_PHONE_NUMBER.
+     * @throws IOException Signals that an I/O exception of some sort has occurred.
+     */
     public String getTodaysMessage() throws IOException {
 
         String todaysDate = fetchAndFormatTodaysDate();
@@ -44,17 +58,18 @@ public class DailyMessage {
         String todaysNews = new News().getTodaysNews("bbc-news");
         String historicNews = new News().getHistoricNews();
 
+        // writing 👴 as \uD83D\uDC74 prevents Twilio 30008 Error: Unknown error.
         return String.format(
             "Good Morning 👋, it's %s!\n\n"
                 + "The 🌡 is %s, and for the weather, currently, we have %s %s\n"
                 + "The humidity is %s with %s of ☔ and %s 🌬\n"
-                + "The sun sets at %s & the moon's phase is %s\n\n"
+                + "The sun sets at %s\n\n"
                 + "In the news today 🗞: %s\n"
-                + "In the news 10 years ago 👴: %s\n\n"
-                + "Remember: %s 💆‍‍\n",
+                + "In the news 10 years ago \uD83D\uDC74: %s\n\n"
+                + "Remember: %s 💆‍‍",
             todaysDate, wttr.getTemperature(), wttr.getWeather(), wttr.getWeatherEmoji(),
             wttr.getHumidity(), wttr.getPrecipitationMM(), wttr.getWind(), wttr.getSunset(),
-            wttr.getMoonPhaseEmoji(), todaysNews, historicNews, affirmation
+            todaysNews, historicNews, affirmation
         );
     }
 }

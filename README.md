@@ -3,4 +3,6 @@
 
 ## Todo
 * ~Configure News.java (2020-06-07)~
-* Edit Config.java to use AWS Lambda environment variables
+* ~Edit Config.java to use AWS Lambda environment variables (2020-06-11)~
+* Complete README
+* Implement tests for functionality that uses environment variables
