@@ -3,7 +3,7 @@
 
 ![Example Output](images/example.png)
 
-[![DepShield Badge](https://depshield.sonatype.org/badges/followingell/curtains/depshield.svg)](https://depshield.github.io) ![GitHub](https://img.shields.io/github/license/followingell/curtains)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/followingell/curtains?include_prereleases) ![GitHub](https://img.shields.io/github/license/followingell/curtains)]
 
 ## Table of Contents
 - [Motivation](#motivation)
