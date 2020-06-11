@@ -26,7 +26,7 @@ Waking up, I would frequently get distracted, checking other apps after I'd look
 ## Features
 - **Weather Reporting:** *actual temperature, weather condition, humidity, precipitation, wind & sunset time.*
 - **News:** *today's top headline with link to story & historic headline with link to story.*
-- **Affirmation:** *An affirmation.*
+- **Affirmation:** *an affirmation.*
 
 Weather and news are customisable. App design allows for new components to be added easily.
 
