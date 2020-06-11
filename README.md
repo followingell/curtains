@@ -9,16 +9,16 @@
 - [Motivation](#motivation)
 - [Features](#features)
 - [Source Contents](#source-contents)
-- [How to Use?](#how-to-use?)
+- [How to Use?](#how-to-use)
   - [Prerequisites](#Prerequisites)
   - [Setup Guide](#setup-guide)
     - [Before Starting](#before-starting)
     - [Code](#code)
     - [AWS](#aws)
 - [To Do](#to-do)
+- [Acknowledgments](#acknowledgments)
 - [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgments](#acknowledgments)
 
 ## Motivation
 Waking up, I would frequently get distracted, checking other apps after I'd looked at the weather on my phone. Since this app uses SMS, I can still stay informed about the day and prevent distraction from happening by keeping my phone offline until I'm ready to start the day.
