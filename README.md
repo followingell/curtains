@@ -3,7 +3,7 @@
 
 ![Example Output](images/example.png)
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/followingell/curtains?color=green&include_prereleases)  ![GitHub](https://img.shields.io/github/license/followingell/curtains)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/followingell/curtains?color=green&include_prereleases)  ![GitHub](https://img.shields.io/github/license/followingell/curtains)  [![CodeFactor](https://www.codefactor.io/repository/github/followingell/curtains/badge/master)](https://www.codefactor.io/repository/github/followingell/curtains/overview/master)
 
 ## Table of Contents
 - [Motivation](#motivation)

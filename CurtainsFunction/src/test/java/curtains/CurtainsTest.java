@@ -82,6 +82,6 @@ public class CurtainsTest {
         // ordinal date always >= 3 && <= 4
         assertTrue(testTodaysDateSplit[1].length() >= 3 && testTodaysDateSplit[1].length() <= 4);
         // month (in english) always >= 3 && <= 9
-        assertTrue(testTodaysDateSplit[2].length() >= 3 && testTodaysDateSplit[2].length() <= 9);;
+        assertTrue(testTodaysDateSplit[2].length() >= 3 && testTodaysDateSplit[2].length() <= 9);
     }
 }
