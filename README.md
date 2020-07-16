@@ -70,7 +70,6 @@ Use the following instructions to deploy the application.
 7. Edit [DailyMessage.java](https://github.com/followingell/curtains/blob/master/CurtainsFunction/src/main/java/curtains/DailyMessage.java) if changes were made in steps 5/6 following the internal documentation and comments.
 8. Add the environment variables listed in [Config.java](https://github.com/followingell/curtains/blob/4d3a1dfdd469ccd55ce8eab5fb149e810f1bce10/CurtainsFunction/src/main/java/curtains/Config.java)  to IntelliJ's [run configuration](https://www.jetbrains.com/help/objc/add-environment-variables-and-program-arguments.html) for testing. *Note that these do not need "" string qualifiers.*
 9. Add the code below to [DailyMessage.java](https://github.com/followingell/curtains/blob/master/CurtainsFunction/src/main/java/curtains/DailyMessage.java).
-
 ```java
     public static void main(String[] args) throws IOException {
         String todaysMessage = new DailyMessage().getTodaysMessage();
@@ -80,6 +79,7 @@ Use the following instructions to deploy the application.
     }
 ```
 Debug and run with comments to test that your message is formatted correctly. Uncommenting the two lines will send the message to Twilio and then to your ```RECEIVER_PHONE_NUMBER```. **This will charge your Twilio account**, however, you should have trial credit.
+
 10. If you received the message correctly, delete the code above from [DailyMessage.java](https://github.com/followingell/curtains/blob/master/CurtainsFunction/src/main/java/curtains/DailyMessage.java) and edit the [pom.xml](https://github.com/followingell/curtains/blob/master/CurtainsFunction/pom.xml) file, remembering to change [this](https://github.com/followingell/curtains/blob/4d3a1dfdd469ccd55ce8eab5fb149e810f1bce10/CurtainsFunction/pom.xml#L4) author line.
 11. Open Intellij's Terminal and write ```mvn package```, then hit ```ctrl + Enter```. Maven should build the project and hopefully display a 'BUILD SUCCESS' message.
 12. If this happened, congratulations you can move to the next section!
